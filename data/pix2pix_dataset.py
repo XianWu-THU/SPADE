@@ -80,12 +80,14 @@ class Pix2pixDataset(BaseDataset):
         else:
             instance_path = self.instance_paths[index]
             # instance = Image.open(instance_path)
+            # if instance.mode == 'L':
+            #     instance_tensor = transform_label(instance) * 255
+            #     instance_tensor = instance_tensor.long()
+            # else:
+            #     instance_tensor = transform_label(instance)
+
             instance = Image.open(instance_path).convert('L')
-            if instance.mode == 'L':
-                instance_tensor = transform_label(instance) * 255
-                instance_tensor = instance_tensor.long()
-            else:
-                instance_tensor = transform_label(instance)
+            instance_tensor = transform_label(instance)
 
         input_dict = {'label': label_tensor,
                       'instance': instance_tensor,
